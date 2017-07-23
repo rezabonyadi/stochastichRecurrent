@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/python test1.iml" filepath="$PROJECT_DIR$/.idea/python test1.iml" />
+      <module fileurl="file://C:\Users\vardi\OneDrive\Papers\CAI\Inverse recurse\SRNN\codes\stochasticrecurr\.idea\python test1.iml" filepath="C:\Users\vardi\OneDrive\Papers\CAI\Inverse recurse\SRNN\codes\stochasticrecurr\.idea\python test1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/stochasticrecurr.iml" filepath="$PROJECT_DIR$/.idea/stochasticrecurr.iml" />
     </modules>
   </component>
 </project>
