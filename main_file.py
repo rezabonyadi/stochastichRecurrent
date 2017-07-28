@@ -29,8 +29,8 @@ seq3 = seq3[len(seq3)-200:len(seq3)]
 plt.plot(np.arange(len(seq1)), seq1, '-ro', np.arange(len(seq2)), seq2, '-bo',
          np.arange(len(seq3)), seq3, '-ko')
 mng = plt.get_current_fig_manager()
-mng.full_screen_toggle()
-plt.tight_layout()
+# mng.full_screen_toggle()
+# plt.tight_layout()
 
 fft_seq1 = np.absolute(np.fft.fft(seq1 - np.mean(seq1)))
 fft_seq2 = np.absolute(np.fft.fft(seq2 - np.mean(seq2)))

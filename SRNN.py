@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class SRNN():
     degree = 1
     rand_type = "rand"
@@ -23,7 +24,7 @@ class SRNN():
 
     def generate_sequence(self, init_points, steps):
         """
-        Generates a sequence, given the initiale points and the number of smaples in the sequence.
+        Generates a sequence, given the initial points and the number of samples in the sequence.
 
         :param init_points:
         :param steps:
