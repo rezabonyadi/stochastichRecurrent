@@ -3,12 +3,12 @@ import numpy as np
 
 class SRNN():
     degree = 1
-    rand_type = "rand"
+    rand_info = []
     coefs = [1, 1]
 
-    def __init__(self, degree, rand_type, init_coefs=None):
+    def __init__(self, degree, rand_info, init_coefs=None):
         self.degree = degree
-        self.rand_type = rand_type
+        self.rand_info = rand_info
         if init_coefs is None:
             self.initialize_coefs()
         else:
@@ -20,7 +20,7 @@ class SRNN():
 
         :return:
         """
-        self.coefs = np.random.randn(self.degree + 1)/self.degree
+        self.coefs = 1.0 * np.random.randn(self.degree + 1)/self.degree
 
     def generate_sequence(self, init_points, steps):
         """
@@ -36,10 +36,19 @@ class SRNN():
         for i in range(len(init_points), steps):
             c = 0
             for j in range(0, self.degree):
-                c = c + self.coefs[j]*np.random.rand(1)*seq[i - self.degree + j]
+                c = c + self.coefs[j]*self.get_rand()*seq[i - self.degree + j]
 
             c += self.coefs[self.degree]
             seq[i] = c
 
         return seq
 
+    def get_rand(self):
+        res = np.random.rand(1)
+
+        if self.rand_info["type"] == "rand":
+            a = self.rand_info["mean"] - np.sqrt(12.0 * self.rand_info["var"])/2.0
+            b = self.rand_info["mean"] + np.sqrt(12.0 * self.rand_info["var"])/2.0
+            res = (np.random.rand(1) * (b - a)) + a
+
+        return res
