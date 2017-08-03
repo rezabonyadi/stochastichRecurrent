@@ -2,19 +2,27 @@ import numpy as np
 import SRNN
 import matplotlib.pyplot as plt
 import tkinter
+from statsmodels.tsa.ar_model import AR
 
 degree = 2
 samples = 1000
 instances = 400
-rand_info = {"type": "rand", "var": .1, "mean": 1}
+rand_info = {"type": "randn", "var": .1, "mean": .5}
 
-my_srnn = SRNN.SRNN(degree, rand_info)
+my_srnn = SRNN.SRNN(degree, rand_info, [0.5, 0.4, 0.6])
 # print(my_srnn.coefs)
 init_points = np.random.rand(degree)
+
+s = my_srnn.generate_sequence(init_points, samples)
+
+ar_model = AR(s).fit(degree)
+print(ar_model.params)
+print(my_srnn.coefs)
 
 c = np.zeros((instances, samples))
 for i in range(instances):
     c[i, :] = (my_srnn.generate_sequence(init_points, samples))
+
 # print((c[:, degree])) # The next sample right after initial points
 
 for i in range(10):
