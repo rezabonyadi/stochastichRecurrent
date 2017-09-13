@@ -50,5 +50,7 @@ class SRNN():
             a = self.rand_info["mean"] - np.sqrt(12.0 * self.rand_info["var"])/2.0
             b = self.rand_info["mean"] + np.sqrt(12.0 * self.rand_info["var"])/2.0
             res = (np.random.rand(1) * (b - a)) + a
+        if self.rand_info["type"] == "randn":
+            res = (np.random.randn(1) * np.sqrt(self.rand_info["var"]) + self.rand_info["mean"])
 
         return res

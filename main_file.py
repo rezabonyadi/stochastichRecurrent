@@ -6,17 +6,17 @@ from statsmodels.tsa.ar_model import AR
 
 degree = 3
 samples = 1000
-instances = 20
-rand_info = {"type": "rand", "var": .10, "mean": .5}
+instances = 200
+rand_info = {"type": "rand", "var": .1, "mean": .5}
 
-my_srnn = SRNN.SRNN(degree, rand_info, [0.5, -0.1, 0.3, 0.4])
+my_srnn = SRNN.SRNN(degree, rand_info, [0.2, 0.1, 0.8, 0.4])
 # print(my_srnn.coefs)
 init_points = np.random.rand(degree)
 
 s = my_srnn.generate_sequence(init_points, samples)
 
 ar_model = AR(s).fit(degree)
-print(ar_model.params)
+print(2*np.roll(ar_model.params, -1))
 print(my_srnn.coefs)
 
 c = np.zeros((instances, samples))
@@ -30,8 +30,8 @@ for i in range(10):
 
 plt.show()
 
-# for j in range(3):
-#     print(np.mean(c[:, degree + j]), np.var(c[:, degree + j])) # The mean of next sample right after the initial points
+for j in range(3):
+    print(np.mean(c[:, degree + j]), np.var(c[:, degree + j])) # The mean of next sample right after the initial points
 # # for i in range(instances):
 # #     plt.plot(c[i, 0:degree + 10])
 #
