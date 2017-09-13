@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 import tkinter
 from statsmodels.tsa.ar_model import AR
 
-degree = 2
+degree = 3
 samples = 1000
-instances = 400
-rand_info = {"type": "randn", "var": .1, "mean": .5}
+instances = 20
+rand_info = {"type": "rand", "var": .10, "mean": .5}
 
-my_srnn = SRNN.SRNN(degree, rand_info, [0.5, 0.4, 0.6])
+my_srnn = SRNN.SRNN(degree, rand_info, [0.5, -0.1, 0.3, 0.4])
 # print(my_srnn.coefs)
 init_points = np.random.rand(degree)
 
@@ -26,7 +26,7 @@ for i in range(instances):
 # print((c[:, degree])) # The next sample right after initial points
 
 for i in range(10):
-    plt.plot(c[i, :])
+    plt.plot(c[i, 0:10])
 
 plt.show()
 

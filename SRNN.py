@@ -36,9 +36,9 @@ class SRNN():
         for i in range(len(init_points), steps):
             c = 0
             for j in range(0, self.degree):
-                c = c + self.coefs[j]*self.get_rand()*seq[i - self.degree + j]
+                c = c + self.coefs[j]*self.get_rand()*seq[i - 1 - j]
 
-            c += self.coefs[self.degree]
+            c += self.coefs[self.degree]*self.get_rand()
             seq[i] = c
 
         return seq
