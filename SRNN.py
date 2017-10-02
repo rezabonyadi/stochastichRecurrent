@@ -4,15 +4,16 @@ import numpy as np
 class SRNN():
     degree = 1
     rand_info = []
-    coefs = [1, 1]
+    coefs_means = [1, 1]
 
-    def __init__(self, degree, rand_info, init_coefs=None):
-        self.degree = degree
+    def __init__(self, rand_info):
+        self.degree = len(rand_info["means"])
         self.rand_info = rand_info
-        if init_coefs is None:
-            self.initialize_coefs()
-        else:
-            self.coefs = init_coefs
+
+        # if init_coefs is None:
+        #     self.initialize_coefs()
+        # else:
+        #     self.coefs = init_coefs
 
     def initialize_coefs(self):
         """
@@ -20,7 +21,7 @@ class SRNN():
 
         :return:
         """
-        self.coefs = 1.0 * np.random.randn(self.degree + 1)/self.degree
+        # self.coefs = 1.0 * np.random.randn(self.degree + 1)/self.degree
 
     def generate_sequence(self, init_points, steps):
         """
@@ -35,22 +36,22 @@ class SRNN():
 
         for i in range(len(init_points), steps):
             c = 0
-            for j in range(0, self.degree):
-                c = c + self.coefs[j]*self.get_rand()*seq[i - 1 - j]
+            for j in range(0, self.degree - 1):
+                c = c + self.get_rand(j)*seq[i - 1 - j]
 
-            c += self.coefs[self.degree]*self.get_rand()
+            c += self.get_rand(self.degree - 1)
             seq[i] = c
 
         return seq
 
-    def get_rand(self):
+    def get_rand(self, ceof_indx):
         res = np.random.rand(1)
 
-        if self.rand_info["type"] == "rand":
-            a = self.rand_info["mean"] - np.sqrt(12.0 * self.rand_info["var"])/2.0
-            b = self.rand_info["mean"] + np.sqrt(12.0 * self.rand_info["var"])/2.0
+        if self.rand_info["dists"][ceof_indx] == "rand":
+            a = self.rand_info["means"][ceof_indx] - np.sqrt(12.0 * self.rand_info["vars"][ceof_indx])/2.0
+            b = self.rand_info["means"][ceof_indx] + np.sqrt(12.0 * self.rand_info["vars"][ceof_indx])/2.0
             res = (np.random.rand(1) * (b - a)) + a
-        if self.rand_info["type"] == "randn":
-            res = (np.random.randn(1) * np.sqrt(self.rand_info["var"]) + self.rand_info["mean"])
+        if self.rand_info["dists"][ceof_indx] == "randn":
+            res = (np.random.randn(1) * np.sqrt(self.rand_info["vars"][ceof_indx]) + self.rand_info["means"][ceof_indx])
 
         return res
